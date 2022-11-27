@@ -20,8 +20,15 @@ async function run() {
         app.get('/home', async (req, res) => {
             const query = {}
             const cursor = categoryCollection.find(query)
-            const services = await cursor.toArray();
-            res.send(services)
+            const categories = await cursor.toArray();
+            res.send(categories)
+        })
+        app.get('/category', async (req, res) => {
+            const category_name = req.query.category_name;
+            const query = { category_name: category_name }
+            const cursor = productCollection.find(query)
+            const products = await cursor.toArray();
+            res.send(products)
         })
     }
     finally {
