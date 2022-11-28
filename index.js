@@ -15,6 +15,7 @@ async function run() {
     try {
         const categoryCollection = client.db('reused-products').collection('categories')
         const productCollection = client.db('reused-products').collection('products');
+        const usersCollection = client.db('reused-products').collection('users');
 
 
         app.get('/home', async (req, res) => {
@@ -23,12 +24,17 @@ async function run() {
             const categories = await cursor.toArray();
             res.send(categories)
         })
-        app.get('/category', async (req, res) => {
-            const category_name = req.query.category_name;
-            const query = { category_name: category_name }
+        app.get('/category/:name', async (req, res) => {
+            const name = req.params.name;
+            const query = { category_name: name }
             const cursor = productCollection.find(query)
             const products = await cursor.toArray();
             res.send(products)
+        })
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            const users = usersCollection.insertOne(user);
+            res.send(users)
         })
     }
     finally {
