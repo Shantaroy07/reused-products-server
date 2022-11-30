@@ -32,6 +32,11 @@ async function run() {
             const products = await cursor.toArray();
             res.send(products)
         })
+        app.post('/category', async (req, res) => {
+            const product = req.body;
+            const products = await productCollection.insertOne(product);
+            res.send(products)
+        })
         app.post('/users', async (req, res) => {
             const user = req.body;
             const users = await usersCollection.insertOne(user);
