@@ -71,6 +71,24 @@ async function run() {
             const userBookings = await bookingsCollection.find(query).toArray();
             res.send(userBookings)
         })
+        app.get('/allBuyers', async (req, res) => {
+            const role = req.query.role;
+            if (role === 'Buyer') {
+                const query = { role: role }
+                const allBuyers = await usersCollection.find(query).toArray();
+                res.send(allBuyers)
+            }
+
+        })
+        app.get('/allSellers', async (req, res) => {
+            const role = req.query.role;
+            if (role === 'Seller') {
+                const query = { role: role }
+                const allSellers = await usersCollection.find(query).toArray();
+                res.send(allSellers)
+            }
+
+        })
         app.delete('/myProduct/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) };
