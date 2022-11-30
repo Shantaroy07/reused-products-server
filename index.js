@@ -32,9 +32,16 @@ async function run() {
             const products = await cursor.toArray();
             res.send(products)
         })
-        app.post('/category', async (req, res) => {
+        app.post('/addProduct', async (req, res) => {
             const product = req.body;
             const products = await productCollection.insertOne(product);
+            res.send(products)
+        })
+        app.get('/myProduct', async (req, res) => {
+            const email = req.query.email;
+            const query = { seller_email: email }
+            const cursor = productCollection.find(query)
+            const products = await cursor.toArray();
             res.send(products)
         })
         app.post('/users', async (req, res) => {
